@@ -1,7 +1,6 @@
 import { createRoot } from "react-dom/client";
 import {
   BrowserRouter,
-  createBrowserRouter,
   Route,
   Routes,
 } from "react-router";

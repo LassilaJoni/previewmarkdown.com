@@ -1,7 +1,6 @@
-import React, { useState } from "react";
-import { Button } from "@/components/ui/button";
+import { Link, NavLink } from "react-router";
 
-export default function Hero2() {
+export default function Hero() {
 
   return (
     <div className="relative">
@@ -47,7 +46,8 @@ export default function Hero2() {
               </p>
               <div className="flex items-center gap-x-3 sm:text-sm">
                 <div className="flex items-center justify-center gap-x-1 py-2 px-4 text-white font-medium bg-gray-800 duration-150 hover:bg-gray-700 active:bg-gray-900 rounded-full md:inline-flex">
-                    <button>Get Started</button>
+                    <Link to="/editor">Get Started</Link>
+                    
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 20 20"
