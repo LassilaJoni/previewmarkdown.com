@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router";
+import { Link } from "react-router";
 
 export default function Hero() {
 
@@ -15,7 +15,7 @@ export default function Hero() {
         <section>
           <div className="max-w-screen-xl mx-auto px-4 py-28 gap-12 text-gray-600 overflow-hidden md:px-8 md:flex">
             <div className="flex-none space-y-5 max-w-xl">
-              <a
+         {/*      <a
                 href=""
                 className="inline-flex gap-x-6 items-center rounded-full p-1 pr-6 border text-sm font-medium duration-150 hover:bg-white"
               >
@@ -38,6 +38,7 @@ export default function Hero() {
                   </svg>
                 </p>
               </a>
+              */}
               <h1 className="text-4xl text-gray-800  font-extrabold sm:text-5xl">
                 PreviewMarkdown: Mark Your Path to Success
               </h1>
@@ -45,8 +46,9 @@ export default function Hero() {
                 Effortlessly Craft Your Markdown Files With Our User-Friendly Tool
               </p>
               <div className="flex items-center gap-x-3 sm:text-sm">
+              <Link to="/editor">
                 <div className="flex items-center justify-center gap-x-1 py-2 px-4 text-white font-medium bg-gray-800 duration-150 hover:bg-gray-700 active:bg-gray-900 rounded-full md:inline-flex">
-                    <Link to="/editor">Get Started</Link>
+                    Get Started
                     
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -61,6 +63,7 @@ export default function Hero() {
                     />
                   </svg>
                 </div>
+                </Link>
                 <a
                   href=""
                   className="flex items-center justify-center gap-x-1 py-2 px-4 text-gray-700 hover:text-gray-900 font-medium duration-150 md:inline-flex"
@@ -81,6 +84,13 @@ export default function Hero() {
                   </svg>
                 </a>
               </div>
+            </div>
+            <div className="flex-1 hidden md:block">
+              {/* Replace with your image */}
+              <img
+                src="/src/assets/markdown-editor.png"
+                alt="Markdown Editor"
+              />
             </div>
           </div>
         </section>

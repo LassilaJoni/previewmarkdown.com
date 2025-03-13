@@ -1,28 +1,109 @@
+import "@mdxeditor/editor/style.css"
 import {
-    MDXEditor,
-    headingsPlugin,
-    listsPlugin,
-    quotePlugin,
-    thematicBreakPlugin,
-    toolbarPlugin,
-    UndoRedo,
-    BoldItalicUnderlineToggles,
-    BlockTypeSelect,
-    MDXEditorMethods,
-  } from "@mdxeditor/editor";
-  
-  import "@mdxeditor/editor/style.css";
-  import React, { useState } from "react";
-  import { Button } from "../ui/button";
-  import Editor from '@monaco-editor/react';
-  
-  export default function Mark() {
-const markdown = "> This is a quote"
-    return (
-        <div>
-            <MDXEditor markdown={markdown} plugins={[quotePlugin()]} />
-        </div>
-    );
-    
-  }
-  
+  MDXEditor,
+  MDXEditorMethods,
+  UndoRedo,
+  BoldItalicUnderlineToggles,
+  toolbarPlugin,
+  headingsPlugin,
+  quotePlugin,
+  linkDialogPlugin,
+  listsPlugin,
+  thematicBreakPlugin,
+  BlockTypeSelect,
+  CodeToggle,
+  CreateLink,
+  InsertCodeBlock,
+  InsertTable,
+  InsertImage,
+  InsertThematicBreak,
+  InsertFrontmatter,
+  ListsToggle,
+  ConditionalContents,
+  ChangeCodeMirrorLanguage,
+  frontmatterPlugin,
+  imagePlugin,
+  markdownShortcutPlugin,
+  codeBlockPlugin,
+  codeMirrorPlugin,
+  diffSourcePlugin,
+  DiffSourceToggleWrapper,
+  linkPlugin
+} from "@mdxeditor/editor"
+import { useRef } from "react"
+
+interface MarkProps {
+  markdown: string
+  onChange: (value: string) => void
+}
+
+function Mark({ markdown }: MarkProps) {
+  const ref = useRef<MDXEditorMethods>(null)
+
+  return (
+    <div className="h-full">
+      {/* The key prop forces the editor to remount when markdown changes */}
+      <MDXEditor
+        key={markdown}
+        ref={ref}
+        markdown={markdown}
+        contentEditableClassName="prose"
+        plugins={[
+          quotePlugin(),
+          headingsPlugin(),
+          listsPlugin(),
+          thematicBreakPlugin(),
+          linkDialogPlugin(),
+          frontmatterPlugin(),
+          imagePlugin(),
+          linkPlugin(),
+          linkDialogPlugin(),
+          codeBlockPlugin(),
+          markdownShortcutPlugin(),
+          codeBlockPlugin({ defaultCodeBlockLanguage: "js" }),
+          codeMirrorPlugin({
+            codeBlockLanguages: { jsx: 'JavaScript (react)', js: 'JavaScript', javascript: "JavaScript", css: 'CSS', tsx: 'TypeScript (react)', bash: "bash", java: "Java" }
+          }),
+          diffSourcePlugin({ viewMode: 'rich-text' }),
+          toolbarPlugin({
+            toolbarContents: () => (
+              <DiffSourceToggleWrapper>
+                <UndoRedo />
+                <BoldItalicUnderlineToggles />
+                <BlockTypeSelect />
+                <CreateLink />
+                <InsertCodeBlock />
+                <InsertTable />
+                <InsertImage />
+                <InsertThematicBreak />
+                <InsertFrontmatter />
+                <ListsToggle />
+
+                <CodeToggle />
+                <ConditionalContents
+                  options={[
+                    {
+                      when: (editor) => editor?.editorType === "codeblock",
+                      contents: () => <ChangeCodeMirrorLanguage />,
+                    },
+                    {
+                      fallback: () => (
+                        <>
+                          <InsertCodeBlock />
+                        </>
+                      ),
+                    },
+                  ]}
+                />
+              </DiffSourceToggleWrapper>
+              
+            ),
+          }),
+
+        ]}
+      />
+    </div>
+  )
+}
+
+export default Mark

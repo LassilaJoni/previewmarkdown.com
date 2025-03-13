@@ -1,10 +1,9 @@
-import Mark from '@/components/editor-page/Mark'
-import Markdown from '@/components/editor-page/markdown'
+import Mar from '@/components/editor-page/Mar'
 
 export default function Editor() {
   return (
-    <>
-      <Markdown />
-      </>
+    <div className="">
+      <Mar />
+      </div>
   )
 }

@@ -9,18 +9,16 @@ import {
   BoldItalicUnderlineToggles,
   BlockTypeSelect,
   MDXEditorMethods,
+  DiffSourceToggleWrapper,
+  diffSourcePlugin,
 } from "@mdxeditor/editor";
 import "@/index.css";
 import "@mdxeditor/editor/style.css";
-import React, { useState } from "react";
+import React from "react";
 import { Button } from "../ui/button";
-import Editor from '@monaco-editor/react';
 
 export default function Markdown() {
 const ref = React.useRef<MDXEditorMethods>(null)
-
-const [editor, setEditor] = useState(true)
-const [editorValue, setEditorValue] = useState<string | null>(null)
 
 
 const handleMarkdownDownload = () => {
@@ -35,25 +33,19 @@ const handleMarkdownDownload = () => {
     }
 }
 
-const changeEditorView = () => {
-    setEditor(!editor);
-}
 
-console.log("editorvalue", editorValue)
   return (
     <>
-        <Button onClick={() => changeEditorView()}>Change editor</Button>
-        {editor ? (
     <MDXEditor
     ref={ref}
-    onChange={(markdown: string) => setEditorValue(markdown)}
-    markdown={editorValue || ""}
+    markdown={""}
     contentEditableClassName="prose"
     plugins={[
       headingsPlugin(),
       listsPlugin(),
       quotePlugin(),
       thematicBreakPlugin(),
+      diffSourcePlugin({ diffMarkdown: 'An older version', viewMode: 'rich-text' }),
       toolbarPlugin({
         toolbarClassName: 'my-classname',
         toolbarContents: () => (
@@ -62,18 +54,18 @@ console.log("editorvalue", editorValue)
             <UndoRedo />
             <BoldItalicUnderlineToggles />
             <BlockTypeSelect />
-            
+            <DiffSourceToggleWrapper>
+          <UndoRedo />
+        </DiffSourceToggleWrapper>
           </>
         )
       })
     ]}
   />
-        ) : (
-            <div>
-            <Editor height="90vh" defaultLanguage="markdown" value={editorValue ?? undefined} onChange={(value) => setEditorValue(value ?? '')}  />
+      
             <Button onClick={() => handleMarkdownDownload()}>Get markdown</Button>
-            </div>
-        )}
+      
+   
     
         </>
   );
