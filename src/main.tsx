@@ -6,7 +6,7 @@ import {
 } from "react-router";
 import "./index.css";
 import App from "./App.tsx";
-import Editor from "./pages/editor/Editor.tsx";
+import Editor from "./editor/Editor.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <BrowserRouter>

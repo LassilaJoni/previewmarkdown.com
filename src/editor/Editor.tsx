@@ -1,4 +1,5 @@
-import Mar from '@/components/editor-page/Mar'
+import Mar from "@/components/editor-page/Mar";
+
 
 export default function Editor() {
   return (
