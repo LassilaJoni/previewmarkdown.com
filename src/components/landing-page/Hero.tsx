@@ -88,7 +88,7 @@ export default function Hero() {
             <div className="flex-1 hidden md:block">
               {/* Replace with your image */}
               <img
-                src="/src/assets/markdown-editor.png"
+                src="https://github.com/user-attachments/assets/4b0a1c9f-a861-41e0-8cde-e5a53582c414"
                 alt="Markdown Editor"
               />
             </div>
