@@ -1,3 +1,4 @@
+import Banner from "./components/ad";
 import Features from "./components/landing-page/Features";
 import Hero from "./components/landing-page/Hero";
 
@@ -9,6 +10,7 @@ function App() {
           <main className="flex-grow">
             <Hero />
             <Features />
+            <Banner />
           </main>
         </div>
       </body>

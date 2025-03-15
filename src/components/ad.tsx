@@ -1,32 +1,26 @@
-import { useEffect, useRef } from "react";
+import { JSX, useEffect, useRef } from 'react'
+export default function Banner(): JSX.Element {
+    const banner = useRef<HTMLDivElement>(null)
 
-const Ad = () => {
-  const adContainerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const script1 = document.createElement("script");
-    script1.type = "text/javascript";
-    script1.innerHTML = `
-      atOptions = {
-        'key' : 'd56f0c64f95aa0514ccf093c7b4854a4',
-        'format' : 'iframe',
-        'height' : 60,
-        'width' : 468,
-        'params' : {}
-      };
-    `;
-
-    const script2 = document.createElement("script");
-    script2.type = "text/javascript";
-    script2.src = "//www.highperformanceformat.com/d56f0c64f95aa0514ccf093c7b4854a4/invoke.js";
-
-    if (adContainerRef.current) {
-      adContainerRef.current.appendChild(script1);
-      adContainerRef.current.appendChild(script2);
+    const atOptions = {
+        key: 'd56f0c64f95aa0514ccf093c7b4854a4',
+        format: 'iframe',
+        height: 60,
+        width: 468,
+        params: {},
     }
-  }, []);
+    useEffect(() => {
+    if (banner.current && !banner.current.firstChild) {
+        const conf = document.createElement('script')
+        const script = document.createElement('script')
+        script.type = 'text/javascript'
+        script.src = `//www.highperformancedformats.com/${atOptions.key}/invoke.js`
+        conf.innerHTML = `atOptions = ${JSON.stringify(atOptions)}`
 
-  return <div ref={adContainerRef} />;
-};
+        banner.current.append(conf)
+        banner.current.append(script)
+    }
+}, [banner])
 
-export default Ad;
+    return <div className="mx-2 my-5 border border-gray-200 justify-center items-center text-white text-center" ref={banner}></div>
+}
