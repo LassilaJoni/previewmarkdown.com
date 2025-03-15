@@ -2,7 +2,6 @@ import { useState } from "react"
 import { Download, FileText } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Mark from "./Mark"
-import Ad from "../ad"
 
 export default function Mar() {
 
@@ -176,10 +175,6 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
         {/* Template Sidebar */}
         <aside className="w-64 border-r bg-muted/40 p-4 overflow-y-auto hidden md:block">
           <h2 className="text-lg font-semibold mb-4">Templates</h2>
-
-          <div className="mb-4">
-            <Ad />
-          </div>
 
           <div className="space-y-2">
             {templates.map((template) => (
