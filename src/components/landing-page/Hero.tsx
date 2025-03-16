@@ -89,7 +89,7 @@ export default function Hero() {
               {/* Replace with your image */}
               <img
                 src="https://github.com/user-attachments/assets/4b0a1c9f-a861-41e0-8cde-e5a53582c414"
-                alt="Markdown Editor"
+                alt="previewMarkdown page"
               />
             </div>
           </div>

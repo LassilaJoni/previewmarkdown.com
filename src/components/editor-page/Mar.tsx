@@ -2,6 +2,7 @@ import { useState } from "react"
 import { Download, FileText } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Mark from "./Mark"
+import { Link } from "react-router"
 
 export default function Mar() {
 
@@ -114,14 +115,12 @@ Explain how to run the automated tests for this system.
 Add additional notes about how to deploy this on a live system.
 
 ## Built With
-* [Framework](https://framework.com) - The web framework used
-* [Package Manager](https://packagemanager.com) - Dependency Management
+* [Tech 1](http://www.example.com) - Description
+* [Tech 2](http://www.example.com) - Description
 
 ## Contributing
-Please read [CONTRIBUTING.md](https://gist.github.com/) for details on our code of conduct, and the process for submitting pull requests to us.
+Please read [CONTRIBUTING.md](https://github.com/) for details on our code of conduct, and the process for submitting pull requests to us.
 
-## Versioning
-We use [SemVer](http://semver.org/) for versioning.
 
 ## Authors
 * **Your Name** - *Initial work* - [YourUsername](https://github.com/yourusername)
@@ -131,8 +130,6 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 * Hat tip to anyone whose code was used
-* Inspiration
-* etc
 `,
     },
   ]
@@ -142,12 +139,24 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
   const [activeTemplate, setActiveTemplate] = useState<string>(defaultTemplate.id)
 
   const applyTemplate = (templateId: string) => {
-    const template = templates.find((t) => t.id === templateId)
-    if (template) {
-      setMarkdown(template.content)
-      setActiveTemplate(templateId)
+    const currentTemplate = templates.find((t) => t.id === activeTemplate);
+  
+    if (currentTemplate && markdown !== currentTemplate.content) {
+      const confirmed = window.confirm(
+        "You have unsaved changes. Are you sure you want to switch templates? Download your current markdown before switching templates to avoid losing your changes."
+      );
+      if (!confirmed) {
+        return;
+      }
     }
-  }
+    
+    const template = templates.find((t) => t.id === templateId);
+    if (template) {
+      setMarkdown(template.content);
+      setActiveTemplate(templateId);
+    }
+  };
+  
 
   const handleDownload = () => {
     const element = document.createElement("a")
@@ -166,7 +175,9 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
         <div className="container px-4 py-3 flex items-center justify-between">
           <div className="flex items-center space-x-2">
             <FileText className="h-6 w-6" />
-            <span className="text-xl font-bold">Markdown Editor</span>
+            <Link to="/">
+            <span className="text-xl font-bold">PreviewMarkdown</span>
+            </Link>
           </div>
         </div>
       </header>
@@ -220,7 +231,7 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
           </div>
           <div className="flex-1 overflow-auto p-4">
             {/* Pass current markdown and the updater function to the Mark component */}
-            <Mark markdown={markdown} onChange={setMarkdown} />
+            <Mark markdown={markdown} onChange={setMarkdown} activeTemplate={activeTemplate} />
           </div>
         </main>
       </div>

@@ -35,18 +35,20 @@ import { useRef } from "react"
 interface MarkProps {
   markdown: string
   onChange: (value: string) => void
+  activeTemplate: string
 }
 
-function Mark({ markdown }: MarkProps) {
+function Mark({ markdown, onChange, activeTemplate }: MarkProps) {
   const ref = useRef<MDXEditorMethods>(null)
 
   return (
     <div className="h-full">
       {/* The key prop forces the editor to remount when markdown changes */}
       <MDXEditor
-        key={markdown}
+        key={activeTemplate}
         ref={ref}
         markdown={markdown}
+        onChange={onChange}
         contentEditableClassName="prose"
         plugins={[
           quotePlugin(),
