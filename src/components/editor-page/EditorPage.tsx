@@ -3,7 +3,6 @@ import { Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Mark from "./Markdown";
 import { Link } from "react-router";
-import Ad from "../ad";
 import templates from "@/data/templates";
 
 export default function EditorPage() {
