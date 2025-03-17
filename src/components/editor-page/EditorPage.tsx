@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Download, FileText } from "lucide-react";
+import { Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Mark from "./Markdown";
 import { Link } from "react-router";
@@ -48,7 +48,6 @@ export default function EditorPage() {
       <header className="border-b">
         <div className="container px-4 py-3 flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <FileText className="h-6 w-6" />
             <Link to="/">
               <span className="text-xl font-bold">PreviewMarkdown</span>
             </Link>

@@ -1,22 +1,35 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from "react";
+
+declare global {
+    interface Window {
+        aclib?: {
+            runBanner: (options: { zoneId: string }) => void;
+        };
+    }
+}
 
 export default function Ad() {
+    const adContainer = useRef<HTMLDivElement>(null);
+
     useEffect(() => {
-      const script = document.createElement('script');
-      script.type = 'text/javascript';
-      script.innerHTML = `
-        aclib.runBanner({
-          zoneId: '9700878',
-        });
-      `;
-      document.getElementById('script-container')?.appendChild(script);
-      return () => {
-        document.getElementById('script-container')?.removeChild(script);
-      };
+        const loadAdcashScript = () => {
+            if (!document.querySelector('script[src="https://static.adcash.com/aclib.js"]')) {
+                const script = document.createElement("script");
+                script.src = "https://static.adcash.com/aclib.js";
+                script.async = true;
+                script.onload = () => {
+                    if (window.aclib && adContainer.current) {
+                        window.aclib.runBanner({ zoneId: "9700878" });
+                    }
+                };
+                document.body.appendChild(script);
+            } else if (window.aclib && adContainer.current) {
+                window.aclib.runBanner({ zoneId: "9700878" });
+            }
+        };
+
+        loadAdcashScript();
     }, []);
-  
-    return (
-      <div id="script-container">
-      </div>
-    );
-  }
+
+    return <div ref={adContainer}></div>;
+}
