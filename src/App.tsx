@@ -10,7 +10,6 @@ function App() {
           <main className="flex-grow">
             <Hero />
             <Features />
-            <Ad />
           </main>
         </div>
       </body>
