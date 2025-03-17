@@ -1,73 +1,111 @@
+import "@mdxeditor/editor/style.css"
 import {
   MDXEditor,
-  headingsPlugin,
-  listsPlugin,
-  quotePlugin,
-  thematicBreakPlugin,
-  toolbarPlugin,
+  MDXEditorMethods,
   UndoRedo,
   BoldItalicUnderlineToggles,
+  toolbarPlugin,
+  headingsPlugin,
+  quotePlugin,
+  linkDialogPlugin,
+  listsPlugin,
+  thematicBreakPlugin,
   BlockTypeSelect,
-  MDXEditorMethods,
-  DiffSourceToggleWrapper,
+  CodeToggle,
+  CreateLink,
+  InsertCodeBlock,
+  InsertTable,
+  InsertImage,
+  InsertThematicBreak,
+  InsertFrontmatter,
+  ListsToggle,
+  ConditionalContents,
+  ChangeCodeMirrorLanguage,
+  frontmatterPlugin,
+  imagePlugin,
+  markdownShortcutPlugin,
+  codeBlockPlugin,
+  codeMirrorPlugin,
   diffSourcePlugin,
-} from "@mdxeditor/editor";
-import "@/index.css";
-import "@mdxeditor/editor/style.css";
-import React from "react";
-import { Button } from "../ui/button";
+  DiffSourceToggleWrapper,
+  linkPlugin
+} from "@mdxeditor/editor"
+import { useRef } from "react"
 
-export default function Markdown() {
-const ref = React.useRef<MDXEditorMethods>(null)
-
-
-const handleMarkdownDownload = () => {
-    if (ref.current) {
-        const markdown = ref.current.getMarkdown();
-        const blob = new Blob([markdown], { type: 'text/markdown' });
-        const url = URL.createObjectURL(blob)
-        const link = document.createElement("a")
-        link.href = url
-        link.download = "README.md"
-        link.click()
-    }
+interface MarkProps {
+  markdown: string
+  onChange: (value: string) => void
+  activeTemplate: string
 }
 
+function Mark({ markdown, onChange, activeTemplate }: MarkProps) {
+  const ref = useRef<MDXEditorMethods>(null)
 
   return (
-    <>
-    <MDXEditor
-    ref={ref}
-    markdown={""}
-    contentEditableClassName="prose"
-    plugins={[
-      headingsPlugin(),
-      listsPlugin(),
-      quotePlugin(),
-      thematicBreakPlugin(),
-      diffSourcePlugin({ diffMarkdown: 'An older version', viewMode: 'rich-text' }),
-      toolbarPlugin({
-        toolbarClassName: 'my-classname',
-        toolbarContents: () => (
-          <>
-            {' '}
-            <UndoRedo />
-            <BoldItalicUnderlineToggles />
-            <BlockTypeSelect />
-            <DiffSourceToggleWrapper>
-          <UndoRedo />
-        </DiffSourceToggleWrapper>
-          </>
-        )
-      })
-    ]}
-  />
-      
-            <Button onClick={() => handleMarkdownDownload()}>Get markdown</Button>
-      
-   
-    
-        </>
-  );
-  
+    <div className="h-full">
+      {/* The key prop forces the editor to remount when markdown changes */}
+      <MDXEditor
+        key={activeTemplate}
+        ref={ref}
+        markdown={markdown}
+        onChange={onChange}
+        contentEditableClassName="prose"
+        plugins={[
+          quotePlugin(),
+          headingsPlugin(),
+          listsPlugin(),
+          thematicBreakPlugin(),
+          linkDialogPlugin(),
+          frontmatterPlugin(),
+          imagePlugin(),
+          linkPlugin(),
+          linkDialogPlugin(),
+          codeBlockPlugin(),
+          markdownShortcutPlugin(),
+          codeBlockPlugin({ defaultCodeBlockLanguage: "js" }),
+          codeMirrorPlugin({
+            codeBlockLanguages: { jsx: 'JavaScript (react)', js: 'JavaScript', javascript: "JavaScript", css: 'CSS', tsx: 'TypeScript (react)', bash: "bash", java: "Java" }
+          }),
+          diffSourcePlugin({ viewMode: 'rich-text' }),
+          toolbarPlugin({
+            toolbarContents: () => (
+              <DiffSourceToggleWrapper>
+                <UndoRedo />
+                <BoldItalicUnderlineToggles />
+                <BlockTypeSelect />
+                <CreateLink />
+                <InsertCodeBlock />
+                <InsertTable />
+                <InsertImage />
+                <InsertThematicBreak />
+                <InsertFrontmatter />
+                <ListsToggle />
+
+                <CodeToggle />
+                <ConditionalContents
+                  options={[
+                    {
+                      when: (editor) => editor?.editorType === "codeblock",
+                      contents: () => <ChangeCodeMirrorLanguage />,
+                    },
+                    {
+                      fallback: () => (
+                        <>
+                          <InsertCodeBlock />
+                        </>
+                      ),
+                    },
+                  ]}
+                />
+              </DiffSourceToggleWrapper>
+              
+            ),
+          }),
+
+        ]}
+      />
+    </div>
+  )
 }
+
+export default Mark
