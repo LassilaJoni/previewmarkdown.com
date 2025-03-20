@@ -59,7 +59,7 @@ export default function Features() {
         </svg>
       ),
       title: "Build Markdown",
-      desc: "Easily build your markdown with the help of our editor.",
+      desc: "A easy way to build markdown with the help of editor.",
     },
     {
       icon: (
@@ -78,8 +78,8 @@ export default function Features() {
           />
         </svg>
       ),
-      title: "Safe to use",
-      desc: "No need to download any software. Just use it in your browser.",
+      title: "Online",
+      desc: "Just use it in your browser.",
     },
   ];
 
